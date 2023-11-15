@@ -11,6 +11,8 @@
 #	apt-get install pkg-config
 # Mac OS X:
 #   brew install glfw
+#   brew install cmake # not sure but it was done just a minor upgrade
+#   brew install pkg-config # done already 
 # MSYS2:
 #   pacman -S --noconfirm --needed mingw-w64-x86_64-toolchain mingw-w64-x86_64-glfw
 #
@@ -45,18 +47,20 @@ CXXFLAGS += -g -O2 -Wall -Wformat
 #CXXFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
 # above work for 1 issue
 # try this based on indie
-CXXFLAGS += -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+CXXFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
 # kwc has to use above # CXXFLAGS += -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
 # kwc -I slove the cstring issue but now we have the inttypes.h 
 # these are issue if you are on M1!!!
 # see https://indiespark.top/programming/compile-open-ssl-apple-silicon/
+# this cause more problem # CXXFLAGS += -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include 
 CXXFLAGS += -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/
 #CXXFLAGS += -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/
-#CXXFLAGS += -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include 
 #kwc suggested but not used # CXXFLAGS += --sysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
 # but still have c++ issue as macos is NOT a c++ platform
 # testing it now in a seperate program
 # not related same #include <cstring> not found # CXXFLAGS += -stdlib=libc++
+CXXFLAGS += /usr/local/include
+CXXFLAGS += /opt/X11/include
 
 LIBS =
 
