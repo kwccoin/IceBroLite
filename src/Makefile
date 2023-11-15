@@ -1,3 +1,6 @@
+#!/bin/bash
+#
+# kwc - not sure shebang needed but it is zshell default under macos
 #
 # Cross Platform Makefile
 # Compatible with MSYS2/MINGW, Ubuntu 14.04.1 and Mac OS X
@@ -32,8 +35,29 @@ SOURCES += data/C64_Pro_Mono-STYLE.ttf.cpp
 OBJS = $(addsuffix .o, $(basename $(notdir $(SOURCES))))
 UNAME_S := $(shell uname -s)
 
+
 CXXFLAGS = -I./imgui -I./imgui/backends
 CXXFLAGS += -g -O2 -Wall -Wformat
+# kwc see https://github.com/qutip/qutip/issues/1030
+# kwc after testing you need at least this line to avoid linux/limit.h issue
+# kwc repeated not used # CXXFLAGS += -I/usr/local/include 
+# kwc suggested but not used # CXXFLAGS += -F/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks 
+#CXXFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+# above work for 1 issue
+# try this based on indie
+CXXFLAGS += -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+# kwc has to use above # CXXFLAGS += -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+# kwc -I slove the cstring issue but now we have the inttypes.h 
+# these are issue if you are on M1!!!
+# see https://indiespark.top/programming/compile-open-ssl-apple-silicon/
+CXXFLAGS += -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/
+#CXXFLAGS += -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/
+#CXXFLAGS += -I/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include 
+#kwc suggested but not used # CXXFLAGS += --sysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+# but still have c++ issue as macos is NOT a c++ platform
+# testing it now in a seperate program
+# not related same #include <cstring> not found # CXXFLAGS += -stdlib=libc++
+
 LIBS =
 
 ##---------------------------------------------------------------------
